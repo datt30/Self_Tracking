@@ -24,10 +24,10 @@
 									<div class="card">
 										<div class="card-body">
 											<h5 class="card-title mb-4">Average blinks per minute</h5>
-											<h1 class="mt-1 mb-3">{{ average_blink }}</h1>
+											<h1 class="mt-1 mb-3">{{ blink_average }}</h1>
 											<div class="mb-1">
-												<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
-												<span class="text-muted">Below that recommended by the OMS</span>
+												<span class="{{ blink_color }}"> <i class="mdi mdi-arrow-bottom-right"></i>{{ blink_percentage }}%</span>
+												<span class="text-muted">{{ blink_message }}</span>
 											</div>
 										</div>
 									</div>
@@ -35,10 +35,6 @@
 										<div class="card-body">
 											<h5 class="card-title mb-4">Upper blink ratio per minute</h5>
 											<h1 class="mt-1 mb-3">{{ upper_blink_ratio }}</h1>
-											<div class="mb-1">
-												<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
-												<span class="text-muted">Since last week</span>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -53,10 +49,6 @@
 										<div class="card-body">
 											<h5 class="card-title mb-4">Lower blink ratio per minute</h5>
 											<h1 class="mt-1 mb-3">{{ lower_blink_ratio }}</h1>
-											<div class="mb-1">
-												<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
-												<span class="text-muted">Since last week</span>
-											</div>
 										</div>
 									</div>
 								</div>
