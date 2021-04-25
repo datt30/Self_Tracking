@@ -24,7 +24,7 @@
 									<div class="card">
 										<div class="card-body">
 											<h5 class="card-title mb-4">Average blinks per minute</h5>
-											<h1 class="mt-1 mb-3">7</h1>
+											<h1 class="mt-1 mb-3">69</h1>
 											<div class="mb-1">
 												<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
 												<span class="text-muted">Below that recommended by the OMS</span>
@@ -34,7 +34,7 @@
 									<div class="card">
 										<div class="card-body">
 											<h5 class="card-title mb-4">Upper blink ratio per minute</h5>
-											<h1 class="mt-1 mb-3">12</h1>
+											<h1 class="mt-1 mb-3">97</h1>
 											<div class="mb-1">
 												<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
 												<span class="text-muted">Since last week</span>
@@ -46,13 +46,13 @@
 									<div class="card">
 										<div class="card-body">
 											<h5 class="card-title mb-4">Total session time</h5>
-											<h1 class="mt-1 mb-3">5min</h1>
+											<h1 class="mt-1 mb-3">2min</h1>
 										</div>
 									</div>
 									<div class="card">
 										<div class="card-body">
 											<h5 class="card-title mb-4">Lower blink ratio per minute</h5>
-											<h1 class="mt-1 mb-3">0</h1>
+											<h1 class="mt-1 mb-3">41</h1>
 											<div class="mb-1">
 												<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
 												<span class="text-muted">Since last week</span>
@@ -63,7 +63,6 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="col-xl-6 col-xxl-7">
 						<div class="card flex-fill w-100">
 							<div class="card-header">
@@ -72,7 +71,21 @@
 							</div>
 							<div class="card-body py-3">
 								<div class="chart chart-sm">
-									<canvas id="chartjs-dashboard-line"></canvas>
+									<canvas id="chart-blink"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-xxl-7">
+						<div class="card flex-fill w-100">
+							<div class="card-header">
+								<h5 class="card-title mb-0">Body position</h5>
+							</div>
+							<div class="card-body py-3">
+								<div class="chart chart-sm">
+									<canvas id="chart-body-position"></canvas>
 								</div>
 							</div>
 						</div>
@@ -85,21 +98,70 @@
 	<script src="js/app.js"></script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
-			var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
+			var ctx = document.getElementById("chart-blink").getContext("2d");
 			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
 			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
 			gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
-			// Line chart
-			new Chart(document.getElementById("chartjs-dashboard-line"), {
+			// Line chart for blinks
+			new Chart(document.getElementById("chart-blink"), {
 				type: "line",
 				data: {
-					labels: [1, 2, 3, 4, 5],
+					labels: [1, 2],
 					datasets: [{
 						label: "Blinks",
 						fill: true,
 						backgroundColor: gradient,
 						borderColor: window.theme.primary,
-						data: [0, 6, 8, 12, 8]
+						data: [41, 97]
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false
+					},
+					hover: {
+						intersect: true
+					},
+					plugins: {
+						filler: {
+							propagate: false
+						}
+					},
+					scales: {
+						xAxes: [{
+							reverse: true,
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}],
+						yAxes: [{
+							ticks: {
+								stepSize: 1000
+							},
+							display: true,
+							borderDash: [3, 3],
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}]
+					}
+				}
+			});
+			// Line chart for body position
+			new Chart(document.getElementById("chart-body-position"), {
+				type: "line",
+				data: {
+					labels: ['Bad', 'Good'],
+					datasets: [{
+						label: "Body Position",
+						fill: true,
+						backgroundColor: gradient,
+						borderColor: window.theme.primary,
+						data: [1, 1]
 					}]
 				},
 				options: {

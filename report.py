@@ -12,7 +12,9 @@ def generate_report(blink_data, body_position_data):
             'upper_blink_ratio': max(blink_data),
             'lower_blink_ratio': min(blink_data),
             'blink_labels': list(range(1, len(blink_data)+1)),
-            'blink_data': blink_data
+            'blink_data': blink_data,
+            'body_position_labels': list(range(1, len(blink_data) + 1)),
+            'body_position_data': body_position_data
         }
 
         jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader('template'))
@@ -23,9 +25,7 @@ def generate_report(blink_data, body_position_data):
 
 
 def show_last_report():
+    chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
     url = os.path.join(os.path.dirname(__file__), 'template/report.html')
-    webbrowser.open(url, new=2)
+    webbrowser.get(chrome_path).open(url, new=2)
 
-
-#generate_report([2,3,4,5,12,11], None)
-#show_last_report()
