@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Self Tracking</title>
+	<link href="css/app.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="main">
+		<main class="content">
+			<div class="container-fluid p-0">
+
+				<div class="row mb-2 mb-xl-3">
+					<div class="col-auto d-none d-sm-block">
+						<h3><strong>Test </strong>Results</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-6 col-xxl-5 d-flex">
+						<div class="w-100">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title mb-4">Average blinks per minute</h5>
+											<h1 class="mt-1 mb-3">{{ blink_average }}</h1>
+											<div class="mb-1">
+												<span class="{{ blink_color }}"> <i class="mdi mdi-arrow-bottom-right"></i>{{ blink_percentage }}%</span>
+												<span class="text-muted">{{ blink_message }}</span>
+											</div>
+										</div>
+									</div>
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title mb-4">Upper blink ratio per minute</h5>
+											<h1 class="mt-1 mb-3">{{ upper_blink_ratio }}</h1>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title mb-4">Total session time</h5>
+											<h1 class="mt-1 mb-3">{{ time }}min</h1>
+										</div>
+									</div>
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title mb-4">Lower blink ratio per minute</h5>
+											<h1 class="mt-1 mb-3">{{ lower_blink_ratio }}</h1>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 col-xxl-7">
+						<div class="card flex-fill w-100">
+							<div class="card-header">
+
+								<h5 class="card-title mb-0">Blinks per minute</h5>
+							</div>
+							<div class="card-body py-3">
+								<div class="chart chart-sm">
+									<canvas id="chart-blink"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-12 col-xxl-7">
+						<div class="card flex-fill w-100">
+							<div class="card-header">
+								<h5 class="card-title mb-0">Body position</h5>
+							</div>
+							<div class="card-body py-3">
+								<div class="chart chart-sm">
+									<canvas id="chart-body-position"></canvas>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<script src="js/app.js"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var ctx = document.getElementById("chart-blink").getContext("2d");
+			var gradient = ctx.createLinearGradient(0, 0, 0, 225);
+			gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
+			gradient.addColorStop(1, "rgba(215, 227, 244, 0)");
+			// Line chart for blinks
+			new Chart(document.getElementById("chart-blink"), {
+				type: "line",
+				data: {
+					labels: {{ blink_labels }},
+					datasets: [{
+						label: "Blinks",
+						fill: true,
+						backgroundColor: gradient,
+						borderColor: window.theme.primary,
+						data: {{ blink_data }}
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false
+					},
+					hover: {
+						intersect: true
+					},
+					plugins: {
+						filler: {
+							propagate: false
+						}
+					},
+					scales: {
+						xAxes: [{
+							reverse: true,
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}],
+						yAxes: [{
+							ticks: {
+								stepSize: 1000
+							},
+							display: true,
+							borderDash: [3, 3],
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}]
+					}
+				}
+			});
+			// Line chart for body position
+			new Chart(document.getElementById("chart-body-position"), {
+				type: "line",
+				data: {
+					labels: {{ body_position_labels }},
+					datasets: [{
+						label: "Body Position",
+						fill: true,
+						backgroundColor: gradient,
+						borderColor: window.theme.primary,
+						data: {{ body_position_data }}
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						intersect: false
+					},
+					hover: {
+						intersect: true
+					},
+					plugins: {
+						filler: {
+							propagate: false
+						}
+					},
+					scales: {
+						xAxes: [{
+							reverse: true,
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}],
+						yAxes: [{
+							ticks: {
+								stepSize: 1000
+							},
+							display: true,
+							borderDash: [3, 3],
+							gridLines: {
+								color: "rgba(0,0,0,0.0)"
+							}
+						}]
+					}
+				}
+			});
+		});
+	</script>
+
+</body>
+
+</html>
